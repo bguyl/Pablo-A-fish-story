@@ -23,6 +23,6 @@ public class LeaderBehavior : AgentBehavior {
 	}
 
 	void OnDrawGizmos(){
-		Gizmos.DrawLine(transform.position, transform.position + velocity);
+		Gizmos.DrawLine(transform.position, transform.position + GetWaveInfluence());
 	}
 }
