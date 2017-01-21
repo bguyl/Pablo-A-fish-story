@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 475010}
   - 198: {fileID: 19821510}
   - 199: {fileID: 19922432}
+  - 114: {fileID: 11409830}
   m_Layer: 0
   m_Name: FX_wave
   m_TagString: Untagged
@@ -30,6 +31,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11409830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d726d9d18853e04ba53a8d6bb96dce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LifeTime: 3
 --- !u!198 &19821510
 ParticleSystem:
   m_ObjectHideFlags: 1
