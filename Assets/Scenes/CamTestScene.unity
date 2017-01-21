@@ -212,9 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spherePrefab: {fileID: 415570, guid: a90d916d0a0374187a375fa28644a7c7, type: 2}
-  myLayerMask:
-    serializedVersion: 2
-    m_Bits: 2048
 --- !u!1 &396580613
 GameObject:
   m_ObjectHideFlags: 0

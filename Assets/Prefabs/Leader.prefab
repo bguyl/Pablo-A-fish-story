@@ -12,7 +12,7 @@ GameObject:
   - 135: {fileID: 13582354}
   - 54: {fileID: 5450138}
   - 114: {fileID: 11427638}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Leader
   m_TagString: Leader
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 417240}
   - 137: {fileID: 13741488}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Fish04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 424302}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Fin_l_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 469484}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 423380}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Fin_r_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 401180}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Fin_r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 410210}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Fin_l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 411864}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 409024}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Head_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 474932}
   - 111: {fileID: 11121400}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Fish04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 433400}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 451576}
-  m_Layer: 1
+  m_Layer: 10
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
