@@ -3,35 +3,44 @@
 public class BoidBehavior : AgentBehavior {
 
 	public GameObject leader;
-	LeaderBehavior leaderBehavior;
+	private LeaderBehavior leaderBehavior;
+	private Rigidbody rigidbody;
 
 	// Use this for initialization
 	void Start () {
         leader = GameObject.FindGameObjectWithTag("Leader");
+		rigidbody = GetComponent<Rigidbody>();
 		leaderBehavior = leader.GetComponent<LeaderBehavior>();
-		destination = transform.position;
+		influences = transform.position;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+		Vector3 previousPosition = transform.position;
+		influences = new Vector3(0,0,0);
 
 		//Apply boid behavior
-		destination += GetAlignmentInfluence();
-		destination += GetCohesionInfluence();
-		destination += GetSeparationInfluence();
-		destination += GetLeaderInfluence();
-	
-		velocity = Vector3.MoveTowards(transform.position, destination, 0.125f) - transform.position;
-		transform.position = Vector3.MoveTowards(transform.position, destination, 0.125f);
-		transform.rotation = Quaternion.LookRotation(velocity);
+		influences += GetAlignmentInfluence();
+		influences += GetCohesionInfluence();
+		influences += GetSeparationInfluence();
+		influences += GetLeaderInfluence();
+
+		Vector3 currentPosition = transform.position + influences * Time.deltaTime * speed;
+		rigidbody.MovePosition(currentPosition);
+		transform.rotation = Quaternion.LookRotation(transform.forward);
+		velocity = currentPosition - previousPosition;
+		Debug.Log("Boid: "+velocity);
 	}
 
+	void OnDrawGizmos(){
+		//Gizmos.DrawLine(transform.position, transform.position + velocity);
+		Gizmos.DrawLine(transform.position, transform.position + GetLeaderInfluence());
+	}
 
     public Vector3 GetLeaderInfluence(){
         //TODO: Rename constant
-        int cst = 0;
-        Vector3 result;
-        result = - leaderBehavior.Velocity;
+        int cst = 5;
+        Vector3 result = - leaderBehavior.Velocity;
         result = Vector3.Normalize(result) * cst;
         result += leader.transform.position;
 		return (result - transform.position);

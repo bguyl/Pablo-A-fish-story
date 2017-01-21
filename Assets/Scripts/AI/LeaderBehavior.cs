@@ -3,14 +3,26 @@ using System.Collections;
 
 public class LeaderBehavior : AgentBehavior {
 
+	private Rigidbody rigidbody;
+
 	// Use this for initialization
 	void Start () {
-		destination = new Vector3(0,50,0);
+		rigidbody = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		velocity = Vector3.MoveTowards(transform.position, destination, 0.125f) - transform.position;
-		transform.position = Vector3.MoveTowards(transform.position, destination, 0.125f);
+	void FixedUpdate () {
+		Vector3 previousPosition = transform.position;
+		influences = transform.forward;
+		influences += GetWaveInfluence();
+		
+		Vector3 currentPosition = transform.position + influences * Time.deltaTime * speed;
+		rigidbody.MovePosition(currentPosition);
+		transform.rotation = Quaternion.LookRotation(transform.forward);
+		velocity = currentPosition - previousPosition;
+	}
+
+	void OnDrawGizmos(){
+		Gizmos.DrawLine(transform.position, transform.position + velocity);
 	}
 }

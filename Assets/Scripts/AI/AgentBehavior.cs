@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 
 public abstract class AgentBehavior : MonoBehaviour {
-	public Vector3 destination;
+	public Vector3 influences;
 	const float Y_FACTOR_REDUCER = 0.1f; 
-	protected Vector3 velocity = new Vector3(0,0,0);
 	protected List<AgentBehavior> neighbors = new List<AgentBehavior>();
+    protected Vector3 velocity;
 
-	public Vector3 Velocity {
-		get { return velocity; }
-	}
-	
+    public float speed = 5;
+
+    protected Vector3 waveInfluence = new Vector3(0,0,0);
+
+    public Vector3 Velocity {
+        get { return velocity; }
+    }
+
 	void OnTriggerEnter(Collider neighbor) {
 		if(neighbor.gameObject.tag == "Fish" || neighbor.gameObject.tag == "Leader"){
 			AgentBehavior neighborBehavior = neighbor.GetComponent<AgentBehavior>();
@@ -77,5 +81,15 @@ public abstract class AgentBehavior : MonoBehaviour {
 		result.y *= Y_FACTOR_REDUCER;
         return result;
 
+    }
+
+    public void SetWaveInfluence(Vector3 force) {
+        waveInfluence = force;
+    }
+
+    public Vector3 GetWaveInfluence(){
+        Vector3 tmp = waveInfluence;
+        waveInfluence = new Vector3(0,0,0);
+        return waveInfluence;
     }
 }
