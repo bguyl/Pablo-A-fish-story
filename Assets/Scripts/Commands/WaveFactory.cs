@@ -26,18 +26,21 @@ public class WaveFactory : MonoBehaviour {
     }
   }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, transform.localScale.x / 2);
+    }
+
   void OnTriggerEnter(Collider c) {
     
-    var force = 50f;
-    var dir = transform.position - c.gameObject.transform.position;
-    var receiver = c.gameObject.GetComponent<WaveReceiver>();
-    if (receiver != null) {
-      dir = -dir.normalized;
-      dir.z = 0f;
-      receiver.modifyTrajectory(dir * force);
-
-      c.GetComponent<AgentBehavior>().SetWaveInfluence(dir);
-
+        if (c.tag == "Leader")
+        {
+            var force = 50f;
+            var dir = transform.position - c.gameObject.transform.position;
+            dir = -dir.normalized;
+            dir.z = 0f;
+            c.GetComponent<LeaderBehavior>().SetWaveInfluence(dir);
+        }
+    
     }
-  }
 }

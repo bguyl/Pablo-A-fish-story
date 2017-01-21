@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 	
 	}
 
-    void OnClickPlay()
+    public void OnClickPlay()
     {
         MainMenuPanel.SetActive(false);
     }

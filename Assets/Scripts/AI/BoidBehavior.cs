@@ -16,9 +16,10 @@ public class BoidBehavior : AgentBehavior {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		Vector3 previousPosition = transform.position;
-		influences = new Vector3(0,0,0);
 
+        Vector3 previousPosition = transform.position;
+		influences = new Vector3(0,0,0);
+        
 		//Apply boid behavior
 		influences += GetAlignmentInfluence();
 		influences += GetCohesionInfluence();
@@ -52,7 +53,8 @@ public class BoidBehavior : AgentBehavior {
     public Vector3 GetLeaderInfluence(){
         //TODO: Rename constant
         int cst = 5;
-        Vector3 result = -leaderBehavior.Velocity;
+        Vector3 result = Vector3.zero;
+        result = - leaderBehavior.Velocity;
         result = Vector3.Normalize(result) * cst;
         result += leader.transform.position;
 		return (result - transform.position);
