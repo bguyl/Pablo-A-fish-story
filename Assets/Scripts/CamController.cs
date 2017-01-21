@@ -65,12 +65,12 @@ public class CamController : MonoBehaviour {
 	void Update () {
 
         //Test
-        FishesTest = GameObject.FindGameObjectsWithTag("Fish");
+        // FishesTest = GameObject.FindGameObjectsWithTag("Fish");
 
-        foreach(GameObject _fish in FishesTest)
-        {
-            Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
-        }
+        // foreach(GameObject _fish in FishesTest)
+        // {
+        //     Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
+        // }
         //EndTest
 
         //Bounds MapBbox = MapBouds.bounds;
@@ -99,57 +99,20 @@ public class CamController : MonoBehaviour {
         //CamPosition
         Vector3 NewCamPos;
 
-        //CheckLimit
-        /*float bboxLimitMax = Mathf.Max(bbox.max.z, bbox.max.x);
-        float bboxLimitMin = Mathf.Min(bbox.min.z, bbox.min.x);
-
-        if (bboxLimitMax >= MapBbox.max.z || bboxLimitMax >= MapBbox.max.x)
-        {
-            NewCamPos = transform.position;
-        }
-        else if (bboxLimitMin <= MapBbox.min.z || bboxLimitMin <= MapBbox.min.x)
-        {
-            NewCamPos = transform.position;
-        }
-        else
-        {*/
         NewCamPos = LeaderFish.transform.position;
-        //}
          
         NewCamPos.y = transform.position.y;
 
         transform.position = NewCamPos;
     }
 
-    void OnDrawGizmos()
+
+    public void AddFish(GameObject _fish)
     {
-        //Test
-        FishesTest = GameObject.FindGameObjectsWithTag("Fish");
-
-        foreach (GameObject _fish in FishesTest)
-        {
-            Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
-        }
-        //EndTest
-
-        if (!LeaderFish) return;
-        Bounds bbox = LeaderFish.bounds;
-
-        foreach (SkinnedMeshRenderer fish in Fishes)
-        {
-            bbox.Encapsulate(fish.bounds);
-        }
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(new Vector3(bbox.min.x, 0, bbox.min.z), new Vector3(bbox.max.x, 0, bbox.min.z));
-        Gizmos.DrawLine(new Vector3(bbox.min.x, 0, bbox.min.z), new Vector3(bbox.min.x, 0, bbox.max.z));
-        Gizmos.DrawLine(new Vector3(bbox.max.x, 0, bbox.min.z), new Vector3(bbox.max.x, 0, bbox.max.z));
-        Gizmos.DrawLine(new Vector3(bbox.min.x, 0, bbox.max.z), new Vector3(bbox.max.x, 0, bbox.max.z));
+        Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
     }
 
-    public void AddFish( GameObject _fish)
-    {
-        
-        Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
+    public void RemoveFish(GameObject _fish){
+        Fishes.Remove(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
     }
 }

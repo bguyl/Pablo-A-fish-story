@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 
 public abstract class AgentBehavior : MonoBehaviour {
-	public Vector3 influences;
+	protected Vector3 influences;
 	const float Y_FACTOR_REDUCER = 0.1f; 
 	protected List<AgentBehavior> neighbors = new List<AgentBehavior>();
     protected Vector3 velocity = new Vector3(0,0,0);
 
-    public float speed = 5;
+    public float speed = 5.1f;
 
     protected Vector3 waveInfluence = new Vector3(0,0,0);
 
@@ -15,17 +15,17 @@ public abstract class AgentBehavior : MonoBehaviour {
         get { return velocity; }
     }
 
-	void OnTriggerEnter(Collider neighbor) {
-		if(neighbor.gameObject.tag == "Fish" || neighbor.gameObject.tag == "Leader"){
-			AgentBehavior neighborBehavior = neighbor.GetComponent<AgentBehavior>();
+	virtual protected void OnTriggerEnter(Collider c) {
+		if(c.tag == "Fish" || c.tag == "Leader"){
+			AgentBehavior neighborBehavior = c.GetComponent<AgentBehavior>();
 			if(!this.neighbors.Contains(neighborBehavior))
 				this.neighbors.Add(neighborBehavior);
 		}
 	}
 
-	void OnTriggerExit(Collider neighbor){
-		if(neighbor.gameObject.tag == "Fish" || neighbor.gameObject.tag == "Leader"){
-			AgentBehavior neighborBehavior = neighbor.GetComponent<AgentBehavior>();
+	virtual protected void OnTriggerExit(Collider c){
+		if(c.tag == "Fish" || c.tag == "Leader"){
+			AgentBehavior neighborBehavior = c.GetComponent<AgentBehavior>();
 			this.neighbors.Remove(neighborBehavior);
 		}
 	}
@@ -100,7 +100,6 @@ public abstract class AgentBehavior : MonoBehaviour {
     }
 
     public Vector3 GetWaveInfluence(){
-        Debug.Log("WI: "+waveInfluence);
         return waveInfluence;
     }
 }

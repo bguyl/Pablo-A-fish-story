@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
 
 public class BoidBehavior : AgentBehavior {
-
-	public GameObject leader;
 	private LeaderBehavior leaderBehavior;
 	private Rigidbody rigidbody;
+	private Camera camera;
 
 	// Use this for initialization
 	void Start () {
-        leader = GameObject.FindGameObjectWithTag("Leader");
 		rigidbody = GetComponent<Rigidbody>();
-		leaderBehavior = leader.GetComponent<LeaderBehavior>();
 		influences = transform.position;
+		camera = Camera.main;
 	}
 	
 	// Update is called once per frame
@@ -27,10 +25,12 @@ public class BoidBehavior : AgentBehavior {
 		influences += GetLeaderInfluence();
 
 		//speed = (GetSpeedInfluence() + GetLeaderSpeedInfluence())/2f;
-		speed = GetSpeedInfluence();
+		//speed *= GetSpeedInfluence();
+
+		Debug.Log(influences);
 
 		Vector3 currentPosition = transform.position + influences * Time.deltaTime * speed;
-		rigidbody.MovePosition(currentPosition);
+			rigidbody.MovePosition(currentPosition);
 		transform.rotation = Quaternion.LookRotation(transform.forward);
 
 		//Smooth rotation
@@ -41,33 +41,36 @@ public class BoidBehavior : AgentBehavior {
 		velocity = currentPosition - previousPosition;
 	}
 
-	void OnDrawGizmos(){
-		// Gizmos.DrawLine(transform.position, transform.position + velocity);
-		// Gizmos.color = Color.red;
-		// Gizmos.DrawLine(transform.position, transform.position + GetLeaderInfluence());
-
-		// Gizmos.color = Color.green;
-		// Gizmos.DrawLine(transform.position, transform.position + GetSeparationInfluence());
-
-		// Gizmos.color = Color.gray;
-		// Gizmos.DrawLine(transform.position, transform.position + GetCohesionInfluence());
-
-		// Gizmos.color = Color.blue;
-		// Gizmos.DrawLine(transform.position, transform.position + GetAlignmentInfluence());
+	protected override void OnTriggerEnter(Collider c){
+		base.OnTriggerEnter(c);
+		if(c.tag == "Leader"){
+			leaderBehavior = c.GetComponent<LeaderBehavior>();
+			camera.GetComponent<CamController>().AddFish(this.gameObject);
+			return;
+        	}
+		if(c.tag == "Fish" && c.gameObject.GetComponent<BoidBehavior>().leaderBehavior != null){
+			leaderBehavior = c.gameObject.GetComponent<BoidBehavior>().leaderBehavior;;
+			camera.GetComponent<CamController>().AddFish(this.gameObject);
+		}
 	}
 
-    public Vector3 GetLeaderInfluence(){
-        //TODO: Rename constant
-        int cst = 5;
-        Vector3 result = Vector3.zero;
-        result = - leaderBehavior.Velocity;
-        result = Vector3.Normalize(result) * cst;
-        result += leader.transform.position;
-		return (result - transform.position);
-    }
+	public Vector3 GetLeaderInfluence(){
+		if(!leaderBehavior)
+			return new Vector3(0,0,0);
+		//TODO: Rename constant
+		int cst = 3;
+		Vector3 result = Vector3.zero;
+		result = - leaderBehavior.Velocity;
+		result = Vector3.Normalize(result) * cst;
+		result += leaderBehavior.transform.position;
+			return (result - transform.position);
+	}
 
 	public float GetLeaderSpeedInfluence(){
-		return 1f/Vector3.Distance(transform.position, leader.transform.position);
+		float distance = Vector3.Distance(transform.position, leaderBehavior.transform.position);
+		if(distance != 0 && leaderBehavior != null)
+			return (1f/Vector3.Distance(transform.position, leaderBehavior.transform.position));
+		return 1;
 	}
 
 }
