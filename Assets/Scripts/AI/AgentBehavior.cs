@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public abstract class AgentBehavior : MonoBehaviour {
 	public Vector3 destination;
+	const float Y_FACTOR_REDUCER = 0.1f; 
 	protected Vector3 velocity = new Vector3(0,0,0);
 	protected List<AgentBehavior> neighbors = new List<AgentBehavior>();
 
@@ -40,6 +41,7 @@ public abstract class AgentBehavior : MonoBehaviour {
             //Scale by 'gravity formula'
             result += currentDirection * ids;
         }
+		result.y *= Y_FACTOR_REDUCER;
         return result;
     }
 
@@ -55,6 +57,7 @@ public abstract class AgentBehavior : MonoBehaviour {
         float inverseCount = (1/neighbors.Count);
         result.Scale(new Vector3(inverseCount, inverseCount, inverseCount));
 
+		result.y *= Y_FACTOR_REDUCER;
         return result;
     }
 
@@ -70,7 +73,9 @@ public abstract class AgentBehavior : MonoBehaviour {
         result += transform.position;
         float inverseCount = (1.0f/(neighbors.Count+1.0f));
         result = result * inverseCount;
-        return (result - transform.position);
+		result = (result - transform.position);
+		result.y *= Y_FACTOR_REDUCER;
+        return result;
 
     }
 }

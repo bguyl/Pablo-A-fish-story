@@ -5,7 +5,7 @@ public class LeaderBehavior : AgentBehavior {
 
 	// Use this for initialization
 	void Start () {
-		destination = new Vector3(50,0,0);
+		destination = new Vector3(0,50,0);
 	}
 	
 	// Update is called once per frame
