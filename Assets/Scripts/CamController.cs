@@ -88,10 +88,13 @@ public class CamController : MonoBehaviour {
         frustrumHeight *= 2;
         float NewFOV = 2 * Mathf.Atan(frustrumHeight * 0.5f / transform.position.y) * Mathf.Rad2Deg;
 
-        if (NewFOV < minFOV || NewFOV > maxFOV) return;
+        if (NewFOV > minFOV || NewFOV < maxFOV)
+        {
+            float IndexFov = (NewFOV - minFOV) / (maxFOV - minFOV);
+            Cam.fieldOfView = Mathf.Lerp(minFOV, maxFOV, IndexFov);
+        } 
 
-        float IndexFov = (NewFOV - minFOV) / (maxFOV - minFOV);
-        Cam.fieldOfView = Mathf.Lerp(minFOV, maxFOV, IndexFov);
+        
 
         //CamPosition
         Vector3 NewCamPos;
@@ -110,7 +113,7 @@ public class CamController : MonoBehaviour {
         }
         else
         {*/
-            NewCamPos = LeaderFish.transform.position;
+        NewCamPos = LeaderFish.transform.position;
         //}
          
         NewCamPos.y = transform.position.y;

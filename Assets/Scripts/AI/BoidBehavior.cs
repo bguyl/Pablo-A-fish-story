@@ -7,6 +7,7 @@ public class BoidBehavior : AgentBehavior {
 
 	// Use this for initialization
 	void Start () {
+        leader = GameObject.FindGameObjectWithTag("Leader");
 		leaderBehavior = leader.GetComponent<LeaderBehavior>();
 		destination = transform.position;
 	}

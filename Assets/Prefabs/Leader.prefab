@@ -14,7 +14,7 @@ GameObject:
   - 54: {fileID: 5450138}
   - 114: {fileID: 11427638}
   - 23: {fileID: 2382966}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Leader
   m_TagString: Leader
   m_Icon: {fileID: 0}
@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e31e695434e51241b46d1d914e9e69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destination: {x: 0, y: 0, z: 0}
 --- !u!135 &13582354
 SphereCollider:
   m_ObjectHideFlags: 1
