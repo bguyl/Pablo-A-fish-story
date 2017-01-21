@@ -142,7 +142,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!1 &657487164
 GameObject:
@@ -156,6 +156,7 @@ GameObject:
   - 92: {fileID: 657487167}
   - 124: {fileID: 657487166}
   - 81: {fileID: 657487165}
+  - 114: {fileID: 657487170}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -231,6 +232,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &657487170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 657487164}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a21c5954834a0704891053bbaf2818b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MapBouds: {fileID: 0}
+  minFOV: 20
+  maxFOV: 120
 --- !u!1 &899007943
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +363,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!1 &1007694980
 GameObject:
@@ -451,6 +466,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
+      propertyPath: m_TagString
+      value: Fish
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
   m_IsPrefabParent: 0
@@ -493,6 +512,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 589ca0a4140e0e041ac46a8d3e342b90, type: 3}
+      propertyPath: m_TagString
+      value: Leader
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 589ca0a4140e0e041ac46a8d3e342b90, type: 3}
   m_IsPrefabParent: 0
@@ -528,7 +551,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!135 &1465643739
 SphereCollider:
@@ -686,6 +709,10 @@ Prefab:
       propertyPath: m_Name
       value: Fish02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
+      propertyPath: m_TagString
+      value: Fish
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
   m_IsPrefabParent: 0
@@ -732,6 +759,10 @@ Prefab:
       propertyPath: m_Name
       value: Fish02 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
+      propertyPath: m_TagString
+      value: Fish
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
   m_IsPrefabParent: 0
@@ -767,7 +798,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!135 &1914544540
 SphereCollider:

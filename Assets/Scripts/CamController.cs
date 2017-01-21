@@ -11,8 +11,8 @@ public class CamController : MonoBehaviour {
     public Collider MapBouds;
 
     [Header("CamInfo")]
-    public float minFOV;
-    public float maxFOV;
+    public float minFOV = 20;
+    public float maxFOV = 120;
 
 
     Camera Cam;
