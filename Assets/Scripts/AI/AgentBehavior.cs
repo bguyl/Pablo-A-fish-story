@@ -100,7 +100,6 @@ public abstract class AgentBehavior : MonoBehaviour {
     }
 
     public Vector3 GetWaveInfluence(){
-        Debug.Log("WI: "+waveInfluence);
         return waveInfluence;
     }
 }
