@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 public abstract class AgentBehavior : MonoBehaviour {
-	protected Vector3 destination;
+	public Vector3 destination;
 	protected Vector3 velocity = new Vector3(0,0,0);
 	protected List<AgentBehavior> neighbors = new List<AgentBehavior>();
 
