@@ -71,10 +71,12 @@ class Agent
         foreach(Agent neighbor in neighbors){
             result += neighbor.Position;
         }
-        float inverseCount = (1/neighbors.Count);
-        result.Scale(new Vector3(inverseCount, inverseCount, inverseCount));
-        
-        return result;
+        result += this.position;
+        float inverseCount = (1.0f/(neighbors.Count+1.0f));
+        result = result * inverseCount;
+
+        return (result - this.position);
+
     }
 
 }

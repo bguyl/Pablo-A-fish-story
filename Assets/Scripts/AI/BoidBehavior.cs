@@ -11,7 +11,7 @@ public class BoidBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		agent = new Agent(transform.position);
-		destination = new Vector3(50, Random.Range(0.0f,100.0f), Random.Range(0.0f,100.0f));
+		destination = transform.position;//new Vector3(50, Random.Range(0.0f,100.0f), Random.Range(0.0f,100.0f));
 		ctrl = gameObject.GetComponent<CharacterController>();
 	}
 	
@@ -47,12 +47,13 @@ public class BoidBehavior : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider neighbor) {
-		BoidBehavior neighborBehavior = neighbor.GetComponentInParent(typeof(BoidBehavior)) as BoidBehavior;
-		this.agent.Neighbors.Add(neighborBehavior.agent);
+		BoidBehavior neighborBehavior = neighbor.GetComponent<BoidBehavior>();
+		if(!this.agent.Neighbors.Contains(neighborBehavior.agent))
+			this.agent.Neighbors.Add(neighborBehavior.agent);
 	}
 
 	void OnTriggerExit(Collider neighbor){
-		BoidBehavior neighborBehavior = neighbor.GetComponentInParent(typeof(BoidBehavior)) as BoidBehavior;
+		BoidBehavior neighborBehavior = neighbor.GetComponent<BoidBehavior>();
 		this.agent.Neighbors.Remove(neighborBehavior.agent);
 	}
 }
