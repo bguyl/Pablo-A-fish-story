@@ -3,6 +3,7 @@
 public class BoidBehavior : AgentBehavior {
 
 	public GameObject leader;
+    public EnvManager EnvInstance;
 	private LeaderBehavior leaderBehavior;
 	private Rigidbody rigidbody;
 
