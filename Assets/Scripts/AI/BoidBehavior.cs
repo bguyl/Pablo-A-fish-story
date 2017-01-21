@@ -25,6 +25,9 @@ public class BoidBehavior : AgentBehavior {
 		influences += GetSeparationInfluence();
 		influences += GetLeaderInfluence();
 
+		//speed = (GetSpeedInfluence() + GetLeaderSpeedInfluence())/2f;
+		speed = GetSpeedInfluence();
+
 		Vector3 currentPosition = transform.position + influences * Time.deltaTime * speed;
 		rigidbody.MovePosition(currentPosition);
 		transform.rotation = Quaternion.LookRotation(transform.forward);
@@ -33,16 +36,30 @@ public class BoidBehavior : AgentBehavior {
 
 	void OnDrawGizmos(){
 		//Gizmos.DrawLine(transform.position, transform.position + velocity);
+		Gizmos.color = Color.red;
 		Gizmos.DrawLine(transform.position, transform.position + GetLeaderInfluence());
+
+		Gizmos.color = Color.green;
+		Gizmos.DrawLine(transform.position, transform.position + GetSeparationInfluence());
+
+		Gizmos.color = Color.gray;
+		Gizmos.DrawLine(transform.position, transform.position + GetCohesionInfluence());
+
+		Gizmos.color = Color.blue;
+		Gizmos.DrawLine(transform.position, transform.position + GetAlignmentInfluence());
 	}
 
     public Vector3 GetLeaderInfluence(){
         //TODO: Rename constant
         int cst = 5;
-        Vector3 result = - leaderBehavior.Velocity;
+        Vector3 result = -leaderBehavior.Velocity;
         result = Vector3.Normalize(result) * cst;
         result += leader.transform.position;
 		return (result - transform.position);
     }
+
+	public float GetLeaderSpeedInfluence(){
+		return 1f/Vector3.Distance(transform.position, leader.transform.position);
+	}
 
 }

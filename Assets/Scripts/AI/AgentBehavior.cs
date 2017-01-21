@@ -59,8 +59,9 @@ public abstract class AgentBehavior : MonoBehaviour {
             result += neighbor.velocity;
         }
         float inverseCount = (1/neighbors.Count);
-        result.Scale(new Vector3(inverseCount, inverseCount, inverseCount));
+        //result.Scale(new Vector3(inverseCount, inverseCount, inverseCount));
 
+        result *= inverseCount;
 		result.y *= Y_FACTOR_REDUCER;
         return result;
     }
@@ -81,6 +82,16 @@ public abstract class AgentBehavior : MonoBehaviour {
 		result.y *= Y_FACTOR_REDUCER;
         return result;
 
+    }
+
+    public float GetSpeedInfluence(){
+        float result = 0f;
+        foreach(AgentBehavior neighbor in neighbors){
+            result += neighbor.speed;
+        }
+        result = result / neighbors.Count;
+
+        return result;
     }
 
     public void SetWaveInfluence(Vector3 force) {
