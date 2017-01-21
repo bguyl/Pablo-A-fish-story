@@ -449,7 +449,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
@@ -597,7 +597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97470ce5e39947679140887ad126d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spherePrefab: {fileID: 410540, guid: bce48797bc92040fc8271eb8d8250a63, type: 2}
+  spherePrefab: {fileID: 415570, guid: a90d916d0a0374187a375fa28644a7c7, type: 2}
 --- !u!23 &1501971658
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -680,7 +680,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
       propertyPath: m_Name
@@ -726,7 +726,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 5ec58a7cfce13ee438d401a86d2eb4ed, type: 3}
       propertyPath: m_Name
