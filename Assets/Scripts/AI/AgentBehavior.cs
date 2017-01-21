@@ -5,7 +5,7 @@ public abstract class AgentBehavior : MonoBehaviour {
 	public Vector3 influences;
 	const float Y_FACTOR_REDUCER = 0.1f; 
 	protected List<AgentBehavior> neighbors = new List<AgentBehavior>();
-    protected Vector3 velocity;
+    protected Vector3 velocity = new Vector3(0,0,0);
 
     public float speed = 5;
 
