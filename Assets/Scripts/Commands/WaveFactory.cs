@@ -5,9 +5,10 @@ public class WaveFactory : MonoBehaviour {
   public int startSize = 1;
   private int maxSize;
   private float speed;
-
+   
   private Vector3 targetScale;
   private Vector3 baseScale;
+    public GameObject FxWaves;
 
   // Use this for initialization
   void Start () {
@@ -16,6 +17,10 @@ public class WaveFactory : MonoBehaviour {
     baseScale = transform.localScale;
     transform.localScale = baseScale * startSize;
     targetScale = baseScale * maxSize;
+        Vector3 pos = transform.position;
+        pos.y += 0.5f;
+        GameObject obj =  Instantiate(FxWaves, pos, Quaternion.identity) as GameObject;
+        obj.transform.Rotate(new Vector3(-90, 0, 0));
   }
 
   // Update is called once per frame
@@ -26,10 +31,10 @@ public class WaveFactory : MonoBehaviour {
     }
   }
 
-    void OnDrawGizmos()
+    /*void OnDrawGizmos()
     {
         Gizmos.DrawSphere(transform.position, transform.localScale.x / 2);
-    }
+    }*/
 
   void OnTriggerEnter(Collider c) {
     

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class CamController : MonoBehaviour {
 
-    Collider LeaderFish;
-    List<Collider> Fishes = new List<Collider>();
+    SkinnedMeshRenderer LeaderFish;
+    List<SkinnedMeshRenderer> Fishes = new List<SkinnedMeshRenderer>();
     GameObject[] FishesTest;
 
     public Collider MapBouds;
@@ -20,7 +20,7 @@ public class CamController : MonoBehaviour {
     void Start()
     {
 
-        LeaderFish = GameObject.FindGameObjectWithTag("Leader").GetComponent<Collider>();
+        LeaderFish = GameObject.FindGameObjectWithTag("Leader").GetComponentInChildren<SkinnedMeshRenderer>();
         Cam = GetComponent<Camera>();
         Cam.fieldOfView = minFOV;
 
@@ -69,14 +69,14 @@ public class CamController : MonoBehaviour {
 
         foreach(GameObject _fish in FishesTest)
         {
-            Fishes.Add(_fish.GetComponent<Collider>());
+            Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
         }
         //EndTest
 
         //Bounds MapBbox = MapBouds.bounds;
         Bounds bbox = LeaderFish.bounds;
         
-        foreach (Collider fish in Fishes)
+        foreach (SkinnedMeshRenderer fish in Fishes)
         {
             bbox.Encapsulate(fish.bounds);
         }
@@ -128,14 +128,14 @@ public class CamController : MonoBehaviour {
 
         foreach (GameObject _fish in FishesTest)
         {
-            Fishes.Add(_fish.GetComponent<Collider>());
+            Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
         }
         //EndTest
 
         if (!LeaderFish) return;
         Bounds bbox = LeaderFish.bounds;
 
-        foreach (Collider fish in Fishes)
+        foreach (SkinnedMeshRenderer fish in Fishes)
         {
             bbox.Encapsulate(fish.bounds);
         }
@@ -150,6 +150,6 @@ public class CamController : MonoBehaviour {
     public void AddFish( GameObject _fish)
     {
         
-        Fishes.Add(_fish.GetComponent<Collider>());
+        Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
     }
 }
