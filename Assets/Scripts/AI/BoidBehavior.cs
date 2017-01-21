@@ -30,8 +30,6 @@ public class BoidBehavior : AgentBehavior {
 		//speed = (GetSpeedInfluence() + GetLeaderSpeedInfluence())/2f;
 		//speed *= GetSpeedInfluence();
 
-		Debug.Log(influences);
-
 		Vector3 currentPosition = transform.position + influences * Time.deltaTime * speed;
 			rigidbody.MovePosition(currentPosition);
 		transform.rotation = Quaternion.LookRotation(transform.forward);
