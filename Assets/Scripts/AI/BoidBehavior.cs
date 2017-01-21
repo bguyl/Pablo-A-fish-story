@@ -1,59 +1,39 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class BoidBehavior : MonoBehaviour {
+public class BoidBehavior : AgentBehavior {
 
-	Agent agent; 
-	Vector3 destination;
-
-	CharacterController ctrl;
+	public GameObject leader;
+	LeaderBehavior leaderBehavior;
 
 	// Use this for initialization
 	void Start () {
-		agent = new Agent(transform.position);
-		destination = transform.position;//new Vector3(50, Random.Range(0.0f,100.0f), Random.Range(0.0f,100.0f));
-		ctrl = gameObject.GetComponent<CharacterController>();
+		leaderBehavior = leader.GetComponent<LeaderBehavior>();
+		destination = transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-		if(gameObject.tag == "leader"){
-			ControlHandler();
-			return;
-		}
 
-		agent.Position = transform.position;
-		agent.Velocity = Vector3.MoveTowards(transform.position, destination, 0.125f) - transform.position;
+		//Apply boid behavior
+		destination += GetAlignmentInfluence();
+		destination += GetCohesionInfluence();
+		destination += GetSeparationInfluence();
+		destination += GetLeaderInfluence();
+	
+		velocity = Vector3.MoveTowards(transform.position, destination, 0.125f) - transform.position;
 		transform.position = Vector3.MoveTowards(transform.position, destination, 0.125f);
-		destination += agent.GetAlignment();
-		destination += agent.GetCohesion();
-		destination += agent.GetSeparation();
-		destination.x = 50;
+		transform.rotation = Quaternion.LookRotation(velocity);
 	}
 
-	void ControlHandler() {
-		Vector3 before = destination;
 
-		float horizontal = -Input.GetAxis("Horizontal")*10;
-		float vertical = Input.GetAxis("Vertical")*10;
-		destination = new Vector3(50, vertical, horizontal);
-		destination = transform.TransformDirection(destination);
+    public Vector3 GetLeaderInfluence(){
+        //TODO: Rename constant
+        int cst = 0;
+        Vector3 result;
+        result = - leaderBehavior.Velocity;
+        result = Vector3.Normalize(result) * cst;
+        result += leader.transform.position;
+		return (result - transform.position);
+    }
 
-		agent.Velocity = destination - before;
-
-		if(ctrl)
-			ctrl.Move(destination * Time.deltaTime);
-	}
-
-	void OnTriggerEnter(Collider neighbor) {
-		BoidBehavior neighborBehavior = neighbor.GetComponent<BoidBehavior>();
-		if(!this.agent.Neighbors.Contains(neighborBehavior.agent))
-			this.agent.Neighbors.Add(neighborBehavior.agent);
-	}
-
-	void OnTriggerExit(Collider neighbor){
-		BoidBehavior neighborBehavior = neighbor.GetComponent<BoidBehavior>();
-		this.agent.Neighbors.Remove(neighborBehavior.agent);
-	}
 }
