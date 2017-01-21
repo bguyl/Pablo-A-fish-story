@@ -95,12 +95,12 @@ public abstract class AgentBehavior : MonoBehaviour {
     }
 
     public void SetWaveInfluence(Vector3 force) {
+        force *= 3;
         waveInfluence = force;
     }
 
     public Vector3 GetWaveInfluence(){
-        Vector3 tmp = waveInfluence;
-        waveInfluence = new Vector3(0,0,0);
+        Debug.Log("WI: "+waveInfluence);
         return waveInfluence;
     }
 }

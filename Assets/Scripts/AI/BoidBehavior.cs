@@ -32,22 +32,28 @@ public class BoidBehavior : AgentBehavior {
 		Vector3 currentPosition = transform.position + influences * Time.deltaTime * speed;
 		rigidbody.MovePosition(currentPosition);
 		transform.rotation = Quaternion.LookRotation(transform.forward);
+
+		//Smooth rotation
+		Vector3 targetPoint = currentPosition;
+		Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
+		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
+
 		velocity = currentPosition - previousPosition;
 	}
 
 	void OnDrawGizmos(){
-		//Gizmos.DrawLine(transform.position, transform.position + velocity);
-		Gizmos.color = Color.red;
-		Gizmos.DrawLine(transform.position, transform.position + GetLeaderInfluence());
+		// Gizmos.DrawLine(transform.position, transform.position + velocity);
+		// Gizmos.color = Color.red;
+		// Gizmos.DrawLine(transform.position, transform.position + GetLeaderInfluence());
 
-		Gizmos.color = Color.green;
-		Gizmos.DrawLine(transform.position, transform.position + GetSeparationInfluence());
+		// Gizmos.color = Color.green;
+		// Gizmos.DrawLine(transform.position, transform.position + GetSeparationInfluence());
 
-		Gizmos.color = Color.gray;
-		Gizmos.DrawLine(transform.position, transform.position + GetCohesionInfluence());
+		// Gizmos.color = Color.gray;
+		// Gizmos.DrawLine(transform.position, transform.position + GetCohesionInfluence());
 
-		Gizmos.color = Color.blue;
-		Gizmos.DrawLine(transform.position, transform.position + GetAlignmentInfluence());
+		// Gizmos.color = Color.blue;
+		// Gizmos.DrawLine(transform.position, transform.position + GetAlignmentInfluence());
 	}
 
     public Vector3 GetLeaderInfluence(){
