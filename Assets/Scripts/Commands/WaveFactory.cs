@@ -11,8 +11,8 @@ public class WaveFactory : MonoBehaviour {
 
   // Use this for initialization
   void Start () {
-    maxSize = 15;
-    speed = 0.9f;
+    maxSize = 25;
+    speed = 1.4f;
     baseScale = transform.localScale;
     transform.localScale = baseScale * startSize;
     targetScale = baseScale * maxSize;
@@ -21,7 +21,7 @@ public class WaveFactory : MonoBehaviour {
   // Update is called once per frame
   void Update () {
     transform.localScale = Vector3.Lerp(transform.localScale, targetScale, speed * Time.deltaTime);
-    if (transform.localScale.x >= 8.9f) {
+    if (transform.localScale.x >= 17.9f) {
       Destroy(gameObject);
     }
   }
