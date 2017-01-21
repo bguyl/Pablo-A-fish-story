@@ -76,10 +76,14 @@ public class CamController : MonoBehaviour {
         //Bounds MapBbox = MapBouds.bounds;
         Bounds bbox = LeaderFish.bounds;
         
-        foreach (SkinnedMeshRenderer fish in Fishes)
+        if (Fishes.Count > 0)
         {
-            bbox.Encapsulate(fish.bounds);
+            foreach (SkinnedMeshRenderer fish in Fishes)
+            {
+                bbox.Encapsulate(fish.bounds);
+            }
         }
+        
 
         //bbox.Expand(new Vector3(5, 0, 5));
 
