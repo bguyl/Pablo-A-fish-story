@@ -32,6 +32,12 @@ public class BoidBehavior : AgentBehavior {
 		Vector3 currentPosition = transform.position + influences * Time.deltaTime * speed;
 		rigidbody.MovePosition(currentPosition);
 		transform.rotation = Quaternion.LookRotation(transform.forward);
+
+		//Smooth rotation
+		Vector3 targetPoint = currentPosition;
+		Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
+		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
+
 		velocity = currentPosition - previousPosition;
 	}
 

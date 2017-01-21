@@ -36,7 +36,8 @@ public class WaveFactory : MonoBehaviour {
         if (c.tag == "Leader")
         {
             Vector3 dir = c.gameObject.transform.position - transform.position;
-            dir /= Mathf.Pow(Vector3.Distance(transform.position, c.gameObject.transform.position), 2)  ;
+            dir /= Mathf.Pow(Vector3.Distance(transform.position, c.gameObject.transform.position), 2);
+            dir *=2;
             c.GetComponent<LeaderBehavior>().SetWaveInfluence(dir);
         }
     
