@@ -29,7 +29,6 @@ public class BoidBehavior : AgentBehavior {
 		rigidbody.MovePosition(currentPosition);
 		transform.rotation = Quaternion.LookRotation(transform.forward);
 		velocity = currentPosition - previousPosition;
-		Debug.Log("Boid: "+velocity);
 	}
 
 	void OnDrawGizmos(){
