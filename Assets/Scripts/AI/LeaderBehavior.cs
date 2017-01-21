@@ -18,11 +18,11 @@ public class LeaderBehavior : AgentBehavior {
 		
 		Vector3 currentPosition = transform.position + influences * Time.deltaTime * speed;
 		rigidbody.MovePosition(currentPosition);
-		transform.rotation = Quaternion.LookRotation(transform.forward);
 		velocity = currentPosition - previousPosition;
+		transform.rotation = Quaternion.LookRotation(velocity);
 	}
 
 	void OnDrawGizmos(){
-		Gizmos.DrawLine(transform.position, transform.position + GetWaveInfluence());
+		Gizmos.DrawLine(transform.position, transform.position + influences);
 	}
 }

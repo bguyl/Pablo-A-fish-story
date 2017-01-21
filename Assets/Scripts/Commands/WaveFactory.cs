@@ -28,17 +28,15 @@ public class WaveFactory : MonoBehaviour {
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(transform.position, transform.localScale.x / 2);
+        //Gizmos.DrawSphere(transform.position, transform.localScale.x / 2);
     }
 
   void OnTriggerEnter(Collider c) {
     
         if (c.tag == "Leader")
         {
-            var force = 50f;
-            var dir = transform.position - c.gameObject.transform.position;
-            dir = -dir.normalized;
-            dir.z = 0f;
+            Vector3 dir = c.gameObject.transform.position - transform.position;
+            dir /= Mathf.Pow(Vector3.Distance(transform.position, c.gameObject.transform.position), 2)  ;
             c.GetComponent<LeaderBehavior>().SetWaveInfluence(dir);
         }
     

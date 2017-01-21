@@ -36,18 +36,18 @@ public class BoidBehavior : AgentBehavior {
 	}
 
 	void OnDrawGizmos(){
-		//Gizmos.DrawLine(transform.position, transform.position + velocity);
-		Gizmos.color = Color.red;
-		Gizmos.DrawLine(transform.position, transform.position + GetLeaderInfluence());
+		// Gizmos.DrawLine(transform.position, transform.position + velocity);
+		// Gizmos.color = Color.red;
+		// Gizmos.DrawLine(transform.position, transform.position + GetLeaderInfluence());
 
-		Gizmos.color = Color.green;
-		Gizmos.DrawLine(transform.position, transform.position + GetSeparationInfluence());
+		// Gizmos.color = Color.green;
+		// Gizmos.DrawLine(transform.position, transform.position + GetSeparationInfluence());
 
-		Gizmos.color = Color.gray;
-		Gizmos.DrawLine(transform.position, transform.position + GetCohesionInfluence());
+		// Gizmos.color = Color.gray;
+		// Gizmos.DrawLine(transform.position, transform.position + GetCohesionInfluence());
 
-		Gizmos.color = Color.blue;
-		Gizmos.DrawLine(transform.position, transform.position + GetAlignmentInfluence());
+		// Gizmos.color = Color.blue;
+		// Gizmos.DrawLine(transform.position, transform.position + GetAlignmentInfluence());
 	}
 
     public Vector3 GetLeaderInfluence(){
