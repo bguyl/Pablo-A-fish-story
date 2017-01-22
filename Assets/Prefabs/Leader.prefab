@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e31e695434e51241b46d1d914e9e69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 2
   GameInstance: {fileID: 0}
 --- !u!135 &13582354
 SphereCollider:
@@ -482,7 +482,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &13700718
 SkinnedMeshRenderer:

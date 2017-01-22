@@ -28,7 +28,7 @@ public class CamController : MonoBehaviour {
         Cam = GetComponent<Camera>();
         Cam.fieldOfView = minFOV;
         MiddleScreen = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-
+        TargetFish = GameManager.Instance.FindTarget();
     }
 
     void Update () {
@@ -119,7 +119,7 @@ public class CamController : MonoBehaviour {
     IEnumerator AddNewFish(GameObject _fish)
     {
         yield return new WaitForSeconds(1.0f);
-        if (_fish == TargetFish || !TargetFish) TargetFish = GameManager.Instance.FindTarget();
+        //if (_fish == TargetFish || !TargetFish) TargetFish = GameManager.Instance.FindTarget();
         Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
     }
     public void RemoveFish(GameObject _fish){
