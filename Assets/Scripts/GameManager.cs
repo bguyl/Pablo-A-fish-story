@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour {
 
     void EndGame()
     {
+        HUD.SetActive(false);
         ChangePanel(EndGamePanel);
     }
 

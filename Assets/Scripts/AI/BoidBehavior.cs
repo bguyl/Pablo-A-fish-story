@@ -25,24 +25,20 @@ public class BoidBehavior : AgentBehavior {
 	// Update is called once per frame
 	void FixedUpdate () {
 		influences = new Vector3(0,0,0);
-        
-		foreach(BoidBehavior a in neighbors){
-			Debug.Log("id:"+id+" - Voisin:"+a.id);
-		}
 
 		//Apply boid behavior
 		influences += GetAlignmentInfluence();
 		influences += GetCohesionInfluence();
 		influences += GetSeparationInfluence();
-		Debug.Log(GetSeparationInfluence());
 		influences += GetLeaderInfluence();
 		influences = Vector3.Normalize(influences.normalized);
 		influences = new Vector3(influences.x, 0, influences.z);
 		float desiredSpeed = speed * GetLeaderSpeedInfluence();
 		velocity = influences * Time.deltaTime * desiredSpeed;
-		
-		//Smooth rotation + Move
-		Quaternion targetRotation = Quaternion.LookRotation(velocity, Vector3.up);
+
+        //Smooth rotation + Move
+        Quaternion targetRotation = Quaternion.identity;
+		targetRotation = Quaternion.LookRotation(velocity, Vector3.up);
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
 		rigidbody.MovePosition(transform.position + velocity);
 	}
@@ -100,6 +96,7 @@ public class BoidBehavior : AgentBehavior {
 	public float GetLeaderSpeedInfluence(){
 		if(leaderBehavior == null)
 			return 1;
+        speed = leaderBehavior.speed;
 		max_speed = leaderBehavior.speed * 1.5f;
 		float distance = Vector3.Distance(transform.position, leaderBehavior.transform.position);
 		//TODO: Remove constant (7 is the minimal distance)
