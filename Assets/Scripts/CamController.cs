@@ -65,7 +65,7 @@ public class CamController : MonoBehaviour {
 
         transform.position = NewCamPos;
 
-        if (!TargetFish) return;
+        if (!TargetFish || TargetFish == GameManager.Instance) return;
         Debug.Log(TargetFish);
         //Indicator
         Vector3 TargetPosScreen = Cam.WorldToScreenPoint(TargetFish.transform.position);
@@ -89,13 +89,13 @@ public class CamController : MonoBehaviour {
         {
             NewPos.x = (Dir.x / AbsDir.x) * MiddleScreen.y;
             NewPos.y = Dir.z * MiddleScreen.y;
-            NewRotation.z = (Mathf.Sign(NewPos.x) < 0) ? -90 : 90;
+            NewRotation.z = (Mathf.Sign(NewPos.x) < 0) ? 0 : 180;
         }
         else if (AbsDir.x < AbsDir.z)
         {
             NewPos.x = Dir.x * MiddleScreen.x;
             NewPos.y = (Dir.z / AbsDir.z) * (MiddleScreen.y - 60);
-            NewRotation.z = (Mathf.Sign(NewPos.y) < 0) ? 0 : 180;
+            NewRotation.z = (Mathf.Sign(NewPos.y) < 0) ? 90 : -90;
         }
         else
         {
@@ -109,16 +109,10 @@ public class CamController : MonoBehaviour {
         Indicator.localRotation = Quaternion.Euler(NewRotation);
     }
 
-    public void ChangeTargetFish(GameObject _fish)
-    {
-        TargetFish = _fish;
-    }
 
     public void AddFish(GameObject _fish)
     {
-        Debug.Log("yolyoylo");
         GameManager gameInstance = GameManager.Instance;
-        if (_fish == TargetFish || !TargetFish) TargetFish = gameInstance.FindTarget();
         gameInstance.TakeByPablo(_fish);
         StartCoroutine(AddNewFish(_fish));
     }
@@ -126,6 +120,7 @@ public class CamController : MonoBehaviour {
     IEnumerator AddNewFish(GameObject _fish)
     {
         yield return new WaitForSeconds(1.0f);
+        if (_fish == TargetFish || !TargetFish) TargetFish = GameManager.Instance.FindTarget();
         Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
     }
     public void RemoveFish(GameObject _fish){
