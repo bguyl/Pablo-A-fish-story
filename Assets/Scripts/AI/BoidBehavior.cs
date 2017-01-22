@@ -19,7 +19,6 @@ public class BoidBehavior : AgentBehavior {
 		rigidbody = GetComponent<Rigidbody>();
 		influences = transform.position;
 		camera = Camera.main;
-
 	}
 	
 	// Update is called once per frame
