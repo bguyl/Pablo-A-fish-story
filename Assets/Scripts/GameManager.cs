@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour {
     public GameObject CreditPanel;
     public GameObject EndGamePanel;
     public GameObject Environment;
+    public GameObject HUD;
 
     public bool IsInit = false;
     int lastPart = 0;
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour {
             SpawnPoints[n] = spawnRoot.GetChild(n);
         }
 
+        HUD.transform.GetChild(0).GetComponent<Text>().text = FishCanSpawn.ToString();
         Spawn();
 
     }
@@ -86,6 +89,7 @@ public class GameManager : MonoBehaviour {
         FishesSpawn.Remove(_fish);
         Spawn();
         if (FishesSpawn.Count == 0 & FishCanSpawn == 0) EndGame();
+        HUD.transform.GetChild(0).GetComponent<Text>().text = FishCanSpawn.ToString();
     }
 
 
