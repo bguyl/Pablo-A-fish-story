@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
 
     Transform[] SpawnPoints;
     List<GameObject> FishesSpawn = new List<GameObject>();
-
+    Text ScoreTxt;
     void Awake()
     {
         Instance = this;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 
         LeaderFish = GameObject.FindGameObjectWithTag("Leader");
-
+        ScoreTxt = HUD.transform.GetChild(0).GetComponent<Text>();
         Transform spawnRoot = Environment.transform.FindChild("SpawnPoints");
         SpawnPoints = new Transform[spawnRoot.childCount];
 
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
             SpawnPoints[n] = spawnRoot.GetChild(n);
         }
 
-        HUD.transform.GetChild(0).GetComponent<Text>().text = FishCanSpawn.ToString();
+        ScoreTxt.text = FishCanSpawn.ToString();
         Spawn();
 
     }
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour {
         if (FishCanSpawn == 0) return;
         int MaxSpawn;
         
-        MaxSpawn = (FishesSpawn.Count > 0) ? 1 : Random.Range(0, SpawnPoints.Length);
+        MaxSpawn = (FishesSpawn.Count > 0) ? 1 : Random.Range(1, SpawnPoints.Length);
         Debug.Log(MaxSpawn);
         for (int i = 0; i < MaxSpawn; i++)
         {
@@ -87,9 +87,9 @@ public class GameManager : MonoBehaviour {
     public void TakeByPablo(GameObject _fish)
     {
         FishesSpawn.Remove(_fish);
+        ScoreTxt.text = FishCanSpawn.ToString();
         Spawn();
         if (FishesSpawn.Count == 0 & FishCanSpawn == 0) EndGame();
-        HUD.transform.GetChild(0).GetComponent<Text>().text = FishCanSpawn.ToString();
     }
 
 
