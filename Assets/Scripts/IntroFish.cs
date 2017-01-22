@@ -38,8 +38,6 @@ public class IntroFish : MonoBehaviour {
                 NewRot = new Vector3(0, 0, Random.Range(-5, 5)*Time.deltaTime);
                 TimeBetweenChangeRotate = Random.Range(3, 6);
             }
-            //Debug.Log((Screen.width + PosFish.x) % Screen.width);
-            //PosFish = new Vector3(((Screen.width*2 + PosFish.x + (Screen.width/2.0f)) % Screen.width*2)- (Screen.width), ((Screen.height + PosFish.y + (Screen.height / 2.0f)) % Screen.height)-(Screen.height/2.0f), 0);
            
             tr.anchoredPosition = PosFish;
             if (PosFish.y > 300)

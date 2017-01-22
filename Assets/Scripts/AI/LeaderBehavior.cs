@@ -16,19 +16,18 @@ public class LeaderBehavior : AgentBehavior {
 	void FixedUpdate () {
 
         if (!GameManager.Instance.IsInit) return;
-		Vector3 previousPosition = transform.position;
 		influences = transform.forward;
 		influences += GetWaveInfluence();
+		influences = Vector3.Normalize(influences);
+		influences = new Vector3(influences.x, 0, influences.z);
 		
-		Vector3 currentPosition = transform.position + influences * Time.deltaTime * speed;
-		rigidbody.MovePosition(currentPosition);
+		velocity = influences * Time.deltaTime * speed;
 
-		//Smooth rotation
-		Vector3 targetPoint = currentPosition;
-		Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
+		//Smooth rotation + Move
+		Quaternion targetRotation = Quaternion.LookRotation(velocity, Vector3.up);
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
+		rigidbody.MovePosition(transform.position + velocity);
 
-		velocity = currentPosition - previousPosition;
 	}
 
 	void OnDrawGizmos(){
