@@ -10,6 +10,11 @@ public abstract class AgentBehavior : MonoBehaviour {
 
     protected Vector3 waveInfluence = new Vector3(0,0,0);
 
+	protected int id = 0;
+	protected static int cpt = 0;
+
+	public float max_speed;
+
     public Vector3 Velocity {
         get { return velocity; }
     }
