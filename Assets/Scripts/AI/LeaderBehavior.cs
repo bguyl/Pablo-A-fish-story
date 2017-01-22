@@ -4,6 +4,7 @@ using System.Collections;
 public class LeaderBehavior : AgentBehavior {
 
 	private Rigidbody rigidbody;
+    public GameManager GameInstance;
 	const float MAX_ANGULAR = 25f;
 
 	// Use this for initialization
@@ -13,6 +14,8 @@ public class LeaderBehavior : AgentBehavior {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+        if (!GameManager.Instance.IsInit) return;
 		Vector3 previousPosition = transform.position;
 		influences = transform.forward;
 		influences += GetWaveInfluence();

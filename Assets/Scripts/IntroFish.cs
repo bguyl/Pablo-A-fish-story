@@ -10,14 +10,17 @@ public class IntroFish : MonoBehaviour {
     Vector3 NewRot;
     float StartTime = 0;
     public float TimeBetweenChangeRotate;
+    public Texture SkinFish2;
 	// Use this for initialization
 	void Start () {
         StartTime = Time.time;
 
         FishSpeed = Random.Range(0.5f, 2.0f);
+        int index = Random.Range(0, 1);
         for (int i =0; i<transform.childCount; i++)
         {
             Fishes.Add(transform.GetChild(i).gameObject);
+            if (index == 1) Fishes[i].GetComponentInChildren<Renderer>().material.mainTexture = SkinFish2;
         }
 	}
 	

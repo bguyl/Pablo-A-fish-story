@@ -8,7 +8,6 @@ public class WaveFactory : MonoBehaviour {
    
   private Vector3 targetScale;
   private Vector3 baseScale;
-    public GameObject FxWaves;
 
   // Use this for initialization
   void Start () {
@@ -19,8 +18,7 @@ public class WaveFactory : MonoBehaviour {
     targetScale = baseScale * maxSize;
         Vector3 pos = transform.position;
         pos.y += 0.5f;
-        GameObject obj =  Instantiate(FxWaves, pos, Quaternion.identity) as GameObject;
-        obj.transform.Rotate(new Vector3(-90, 0, 0));
+        
   }
 
   // Update is called once per frame

@@ -14,6 +14,10 @@ public class CamController : MonoBehaviour {
     public float minFOV = 20;
     public float maxFOV = 120;
 
+    //Indicator
+    public RectTransform Indicator;
+    public GameObject TargetFish;
+    Vector3 MiddleScreen;
 
     Camera Cam;
 
@@ -23,57 +27,13 @@ public class CamController : MonoBehaviour {
         LeaderFish = GameObject.FindGameObjectWithTag("Leader").GetComponentInChildren<SkinnedMeshRenderer>();
         Cam = GetComponent<Camera>();
         Cam.fieldOfView = minFOV;
+        MiddleScreen = new Vector3(Screen.width / 2, Screen.height / 2, 0);
 
-        //ForceAspectRatio
-
-        float TargetAspect = 16.0f / 10.0f;
-
-        // current aspect ratio
-        float CurrentAspect = (float)Screen.width / (float)Screen.height;
-
-        // current viewport height should be scaled by this amount
-        float scaleheight = CurrentAspect / TargetAspect;
-
-        // if scaled height is less than current height, add letterbox
-        if (scaleheight < 1.0f)
-        {
-            Rect rect = Cam.rect;
-
-            rect.width = 1.0f;
-            rect.height = scaleheight;
-            rect.x = 0;
-            rect.y = (1.0f - scaleheight) / 2.0f;
-
-            Cam.rect = rect;
-        }
-        else 
-        {
-            float scalewidth = 1.0f / scaleheight;
-
-            Rect rect = Cam.rect;
-
-            rect.width = scalewidth;
-            rect.height = 1.0f;
-            rect.x = (1.0f - scalewidth) / 2.0f;
-            rect.y = 0;
-
-            Cam.rect = rect;
-        }
     }
-	
 
-	void Update () {
+    void Update () {
 
-        //Test
-        // FishesTest = GameObject.FindGameObjectsWithTag("Fish");
-
-        // foreach(GameObject _fish in FishesTest)
-        // {
-        //     Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
-        // }
-        //EndTest
-
-        //Bounds MapBbox = MapBouds.bounds;
+        if (!GameManager.Instance.IsInit) return;
         Bounds bbox = LeaderFish.bounds;
         
         if (Fishes.Count > 0)
@@ -84,8 +44,6 @@ public class CamController : MonoBehaviour {
             }
         }
         
-
-        //bbox.Expand(new Vector3(5, 0, 5));
 
         //FOV
         float frustrumHeight = Mathf.Max((bbox.max.z - bbox.min.z), (bbox.max.x - bbox.min.x)/Cam.aspect);
@@ -98,8 +56,6 @@ public class CamController : MonoBehaviour {
             Cam.fieldOfView = Mathf.Lerp(minFOV, maxFOV, IndexFov);
         } 
 
-        
-
         //CamPosition
         Vector3 NewCamPos;
 
@@ -108,14 +64,70 @@ public class CamController : MonoBehaviour {
         NewCamPos.y = transform.position.y;
 
         transform.position = NewCamPos;
+
+        if (!TargetFish) return;
+        Debug.Log(TargetFish);
+        //Indicator
+        Vector3 TargetPosScreen = Cam.WorldToScreenPoint(TargetFish.transform.position);
+
+        if (TargetPosScreen.x> 0 & TargetPosScreen.x< Screen.width & TargetPosScreen.y >0 & TargetPosScreen.y<Screen.height)
+        {
+            if (Indicator.gameObject.activeSelf) Indicator.gameObject.SetActive(false);
+            return;
+        }
+        if (!Indicator.gameObject.activeSelf) Indicator.gameObject.SetActive(true);
+
+        Vector3 Dir = TargetFish.transform.position - LeaderFish.transform.position;
+        Dir.Normalize();
+
+        Vector3 AbsDir = new Vector3(Mathf.Abs(Dir.x), 0, Mathf.Abs(Dir.z));
+
+        Vector3 NewPos = MiddleScreen;
+        Vector3 NewRotation = Vector3.zero;
+
+        if (AbsDir.x > AbsDir.z)
+        {
+            NewPos.x = (Dir.x / AbsDir.x) * MiddleScreen.y;
+            NewPos.y = Dir.z * MiddleScreen.y;
+            NewRotation.z = (Mathf.Sign(NewPos.x) < 0) ? -90 : 90;
+        }
+        else if (AbsDir.x < AbsDir.z)
+        {
+            NewPos.x = Dir.x * MiddleScreen.x;
+            NewPos.y = (Dir.z / AbsDir.z) * (MiddleScreen.y - 60);
+            NewRotation.z = (Mathf.Sign(NewPos.y) < 0) ? 0 : 180;
+        }
+        else
+        {
+            NewPos.x = (Dir.x / AbsDir.x) * MiddleScreen.y;
+            NewPos.y = (Dir.z / AbsDir.z) * (MiddleScreen.y - 60);
+            NewRotation.z = (Mathf.Sign(NewPos.y) < 0) ? (Mathf.Sign(NewPos.x) < 0) ? -45 : 45 : (Mathf.Sign(NewPos.x) < 0) ? -135 : 135;
+        }
+        NewPos.z = Mathf.Abs(2);
+        Indicator.anchoredPosition = NewPos;
+        Indicator.localRotation = Quaternion.Euler(Vector3.zero);
+        Indicator.localRotation = Quaternion.Euler(NewRotation);
     }
 
+    public void ChangeTargetFish(GameObject _fish)
+    {
+        TargetFish = _fish;
+    }
 
     public void AddFish(GameObject _fish)
     {
-        Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
+        Debug.Log("yolyoylo");
+        GameManager gameInstance = GameManager.Instance;
+        if (_fish == TargetFish || !TargetFish) TargetFish = gameInstance.FindTarget();
+        gameInstance.TakeByPablo(_fish);
+        StartCoroutine(AddNewFish(_fish));
     }
 
+    IEnumerator AddNewFish(GameObject _fish)
+    {
+        yield return new WaitForSeconds(1.0f);
+        Fishes.Add(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
+    }
     public void RemoveFish(GameObject _fish){
         Fishes.Remove(_fish.GetComponentInChildren<SkinnedMeshRenderer>());
     }

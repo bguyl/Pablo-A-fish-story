@@ -13,8 +13,7 @@ public class SpawnFish : MonoBehaviour {
         int i = Random.Range(0, 1);
         if(i > 0)
         {
-            Material matObj = obj.GetComponent<MeshRenderer>().material;
-            matObj.mainTexture = SkinFish2;
+            obj.GetComponentInChildren<Renderer>().material.mainTexture = SkinFish2;
         }
         
         obj.transform.SetParent(transform);

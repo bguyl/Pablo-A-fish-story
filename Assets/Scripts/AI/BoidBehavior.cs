@@ -3,8 +3,9 @@
 public class BoidBehavior : AgentBehavior {
 
 	public GameObject leader;
-    public EnvManager EnvInstance;
+    public GameManager GameInstance;
 	private LeaderBehavior leaderBehavior;
+    public PendingBehavior pendingScript;
 	private Rigidbody rigidbody;
 	private Camera camera;
 
@@ -44,15 +45,28 @@ public class BoidBehavior : AgentBehavior {
 
 	protected override void OnTriggerEnter(Collider c){
 		base.OnTriggerEnter(c);
-		if(c.tag == "Leader"){
-			leaderBehavior = c.GetComponent<LeaderBehavior>();
-			camera.GetComponent<CamController>().AddFish(this.gameObject);
-			return;
-        	}
-		if(c.tag == "Fish" && c.gameObject.GetComponent<BoidBehavior>().leaderBehavior != null){
-			leaderBehavior = c.gameObject.GetComponent<BoidBehavior>().leaderBehavior;;
-			camera.GetComponent<CamController>().AddFish(this.gameObject);
-		}
+        if (c.gameObject.layer == 10 & !leaderBehavior)
+        {
+            bool IsShoal = false;
+            if (c.tag == "Leader")
+            {
+                leaderBehavior = c.GetComponent<LeaderBehavior>();
+                IsShoal = true;
+            }
+            else if (c.tag == "Fish")
+            {
+                BoidBehavior script = GetComponent<BoidBehavior>();
+                if (script.leaderBehavior)
+                {
+                    leaderBehavior = script.leaderBehavior;
+                    IsShoal = true;
+                }
+            }if (IsShoal)
+            {
+                camera.GetComponent<CamController>().AddFish(gameObject);
+                pendingScript.pending = false;
+            }
+        }
 	}
 
 	public Vector3 GetLeaderInfluence(){
