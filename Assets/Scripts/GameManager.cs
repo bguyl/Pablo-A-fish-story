@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
     public bool IsInit = false;
     int lastPart = 0;
     public int FishCanSpawn = 20;
-
+    int fishTake = 0;
     public static GameManager Instance;
 
     //spawn boid
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour {
     public void TakeByPablo(GameObject _fish)
     {
         FishesSpawn.Remove(_fish);
-        ScoreTxt.text = FishCanSpawn.ToString();
+        ScoreTxt.text =  (int.Parse(ScoreTxt.text) -1).ToString();
         Spawn();
         if (FishesSpawn.Count == 0 & FishCanSpawn == 0) EndGame();
     }

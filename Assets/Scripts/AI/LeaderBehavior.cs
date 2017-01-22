@@ -28,6 +28,7 @@ public class LeaderBehavior : AgentBehavior {
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
 		rigidbody.MovePosition(transform.position + velocity);
 
+        speed = Camera.main.fieldOfView * 2 / 20;
 	}
 
 	void OnDrawGizmos(){
