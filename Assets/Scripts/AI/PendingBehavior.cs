@@ -22,8 +22,7 @@ public class PendingBehavior : MonoBehaviour {
     if (pending) {
       currentRotation += Time.deltaTime * speed;
       rotation.eulerAngles = new Vector3(0, currentRotation, 0);
-      transform.position = rotation * radius + basePosition;
-      transform.rotation = Quaternion.LookRotation(transform.position - basePosition);
+      transform.position += rotation * radius;
     }
   }
 }

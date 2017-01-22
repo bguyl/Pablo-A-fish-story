@@ -8,24 +8,33 @@ public class BoidBehavior : AgentBehavior {
     public PendingBehavior pendingScript;
 	private Rigidbody rigidbody;
 	private Camera camera;
-
-	private float max_speed;
+	
+	BoidBehavior(){
+		id = cpt;
+		cpt++;
+	}
 
 	// Use this for initialization
 	void Start () {
 		rigidbody = GetComponent<Rigidbody>();
 		influences = transform.position;
 		camera = Camera.main;
+
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 		influences = new Vector3(0,0,0);
         
+		foreach(BoidBehavior a in neighbors){
+			Debug.Log("id:"+id+" - Voisin:"+a.id);
+		}
+
 		//Apply boid behavior
 		influences += GetAlignmentInfluence();
 		influences += GetCohesionInfluence();
 		influences += GetSeparationInfluence();
+		Debug.Log(GetSeparationInfluence());
 		influences += GetLeaderInfluence();
 		influences = Vector3.Normalize(influences.normalized);
 		influences = new Vector3(influences.x, 0, influences.z);
