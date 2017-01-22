@@ -9,6 +9,8 @@ public class BoidBehavior : AgentBehavior {
 	private Rigidbody rigidbody;
 	private Camera camera;
 
+	private float max_speed;
+
 	// Use this for initialization
 	void Start () {
 		rigidbody = GetComponent<Rigidbody>();
@@ -18,8 +20,6 @@ public class BoidBehavior : AgentBehavior {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-
-        Vector3 previousPosition = transform.position;
 		influences = new Vector3(0,0,0);
         
 		//Apply boid behavior
@@ -27,20 +27,27 @@ public class BoidBehavior : AgentBehavior {
 		influences += GetCohesionInfluence();
 		influences += GetSeparationInfluence();
 		influences += GetLeaderInfluence();
-
-		//speed = (GetSpeedInfluence() + GetLeaderSpeedInfluence())/2f;
-		//speed *= GetSpeedInfluence();
-
-		Vector3 currentPosition = transform.position + influences * Time.deltaTime * speed;
-			rigidbody.MovePosition(currentPosition);
-		transform.rotation = Quaternion.LookRotation(transform.forward);
-
-		//Smooth rotation
-		Vector3 targetPoint = currentPosition;
-		Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
+		influences = Vector3.Normalize(influences.normalized);
+		influences = new Vector3(influences.x, 0, influences.z);
+		float desiredSpeed = speed * GetLeaderSpeedInfluence();
+		velocity = influences * Time.deltaTime * desiredSpeed;
+		
+		//Smooth rotation + Move
+		Quaternion targetRotation = Quaternion.LookRotation(velocity, Vector3.up);
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
+		rigidbody.MovePosition(transform.position + velocity);
+	}
 
-		velocity = currentPosition - previousPosition;
+	void OnDrawGizmos(){
+		Gizmos.DrawLine(transform.position, transform.position + influences);
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(transform.position, transform.position + GetAlignmentInfluence());
+		Gizmos.color = Color.blue;
+		Gizmos.DrawLine(transform.position, transform.position + GetCohesionInfluence());
+		Gizmos.color = Color.green;
+		Gizmos.DrawLine(transform.position, transform.position + GetSeparationInfluence());
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawLine(transform.position, transform.position + GetLeaderInfluence());
 	}
 
 	protected override void OnTriggerEnter(Collider c){
@@ -73,7 +80,7 @@ public class BoidBehavior : AgentBehavior {
 		if(!leaderBehavior)
 			return new Vector3(0,0,0);
 		//TODO: Rename constant
-		int cst = 3;
+		float cst = 2f;
 		Vector3 result = Vector3.zero;
 		result = - leaderBehavior.Velocity;
 		result = Vector3.Normalize(result) * cst;
@@ -82,10 +89,21 @@ public class BoidBehavior : AgentBehavior {
 	}
 
 	public float GetLeaderSpeedInfluence(){
+		if(leaderBehavior == null)
+			return 1;
+		max_speed = leaderBehavior.speed * 1.5f;
 		float distance = Vector3.Distance(transform.position, leaderBehavior.transform.position);
-		if(distance != 0 && leaderBehavior != null)
-			return (1f/Vector3.Distance(transform.position, leaderBehavior.transform.position));
-		return 1;
+		//TODO: Remove constant (7 is the minimal distance)
+		if(distance > 7){
+			if( (distance * speed) < max_speed){
+				return distance;
+			}
+			else{
+				float ratio = (max_speed/speed);
+				return ratio;
+			}
+		}
+		return (distance/7f);
 	}
 
 }

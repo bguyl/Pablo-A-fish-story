@@ -66,7 +66,6 @@ public class CamController : MonoBehaviour {
         transform.position = NewCamPos;
 
         if (!TargetFish || TargetFish == GameManager.Instance) return;
-        Debug.Log(TargetFish);
         //Indicator
         Vector3 TargetPosScreen = Cam.WorldToScreenPoint(TargetFish.transform.position);
 

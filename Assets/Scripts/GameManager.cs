@@ -52,7 +52,6 @@ public class GameManager : MonoBehaviour {
         int MaxSpawn;
         
         MaxSpawn = (FishesSpawn.Count > 0) ? 1 : Random.Range(1, SpawnPoints.Length);
-        Debug.Log(MaxSpawn);
         for (int i = 0; i < MaxSpawn; i++)
         {
             int _indexSpawn = Random.Range(0, SpawnPoints.Length - 1);

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public abstract class AgentBehavior : MonoBehaviour {
 	protected Vector3 influences;
-	const float Y_FACTOR_REDUCER = 0.1f; 
 	protected List<AgentBehavior> neighbors = new List<AgentBehavior>();
     protected Vector3 velocity = new Vector3(0,0,0);
 
@@ -45,7 +44,6 @@ public abstract class AgentBehavior : MonoBehaviour {
             //Scale by 'gravity formula'
             result += currentDirection * ids;
         }
-		result.y *= Y_FACTOR_REDUCER;
         return result;
     }
 
@@ -59,10 +57,7 @@ public abstract class AgentBehavior : MonoBehaviour {
             result += neighbor.velocity;
         }
         float inverseCount = (1/neighbors.Count);
-        //result.Scale(new Vector3(inverseCount, inverseCount, inverseCount));
-
-        result *= inverseCount;
-		result.y *= Y_FACTOR_REDUCER;
+        result *= inverseCount;;
         return result;
     }
 
@@ -79,19 +74,8 @@ public abstract class AgentBehavior : MonoBehaviour {
         float inverseCount = (1.0f/(neighbors.Count+1.0f));
         result = result * inverseCount;
 		result = (result - transform.position);
-		result.y *= Y_FACTOR_REDUCER;
         return result;
 
-    }
-
-    public float GetSpeedInfluence(){
-        float result = 0f;
-        foreach(AgentBehavior neighbor in neighbors){
-            result += neighbor.speed;
-        }
-        result = result / neighbors.Count;
-
-        return result;
     }
 
     public void SetWaveInfluence(Vector3 force) {
